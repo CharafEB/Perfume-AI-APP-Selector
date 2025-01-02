@@ -1,8 +1,13 @@
+const express = require('express');
 const app = require('express')();
 app.use(require('express').json());
 require('dotenv').config()
+const authRoutes = require('./routes/authRoutes');
 const Groq = require('groq-sdk');
 const groq = new Groq({ apiKey:process.env.GROQ_API_KEY });
+
+app.set('view engine', 'ejs');
+app.use(authRoutes)
 
 app.post('/testAI', async (req, res) =>{
   const {Gender , Season , Preferred , Personality , Intended , Sensitivity } = req.body;
@@ -10,6 +15,7 @@ console.log(Gender , Season , Preferred , Personality , Intended , Sensitivity);
 
   try {
     const chatCompletion = await getGroqChatCompletion(Gender , Season , Preferred , Personality , Intended , Sensitivity);
+        
     res.send(chatCompletion.choices[0]?.message?.content || "");
   } catch (error) {
     console.error(error);
@@ -34,7 +40,17 @@ function getPerfumeList(){
     messages: [
       {
         role: "user", 
-        content: `I  want to buy a perfume, and these are the details to guide your recommendation. Please suggest 5 perfumes that you consider the most suitable for me based on the following information: Gender: ${GN} / Season: ${SEa} / Preferred Notes: ${PRn} / Personality Type: ${PE} / Intended Use: ${INt} / Sensitivity (Allergies or Dislikes): ${SE} / Here is the list of available perfumes: ${getPerfumeList()}. Important:  Based on the provided details, please select 5 perfumes strictly suitable for the specified gender and requirements. Respond only in JSON format as shown below, without any additional explanations: { perfume : 'Tom Ford Oud Wood', 'Montblanc Explorer', 'Creed Aventus', 'Maison Francis Kurkdjian Baccarat Rouge 540', 'Giorgio Armani Acqua di Gio Profumo'}`,
+        content: `I  want to buy a perfume, and these are the details to guide your recommendation. Please suggest 5 perfumes that you consider the most suitable for me based on the following information: Gender: ${GN} / Season: ${SEa} / Preferred Notes: ${PRn} / Personality Type: ${PE} / Intended Use: ${INt} / Sensitivity (Allergies or Dislikes): ${SE} / Here is the list of available perfumes: ${perfume_List}. Important:  Based on the provided details, please select 5 perfumes strictly suitable for the specified gender and requirements. If no preferred notes are specified ("Preferred Notes: none"), please suggest 3 to 6 notes that would be most suitable for the specified gender and other information . Respond only in JSON format as shown below, without any additional explanations:
+{
+"recommended_notes": [],  // Only include if Preferred Notes is "none"
+"recommended_perfumes": [
+"perfume1",
+"perfume2",
+"perfume3",
+"perfume4",
+"perfume5"
+] // the 5 recommended perfumes based on the provided details and the list of available perfumes
+}`,
       },
     ],
     model: "llama3-8b-8192",
