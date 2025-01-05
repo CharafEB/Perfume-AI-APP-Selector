@@ -49,7 +49,7 @@ function getPerfumeList(){
 "perfume3",
 "perfume4",
 "perfume5"
-] // the 5 recommended perfumes based on the provided details and the list of available perfumes
+] // the 5 recommended perfumes based on the provided details and the list of available perfumes dont add anytihng else out of the list
 }`,
       },
     ],
