@@ -43,10 +43,6 @@ We welcome contributions! If you'd like to contribute to the project, please fol
 3. Commit your changes.
 4. Push your branch and submit a pull request.
 
-License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
-
 Contact
 
 For any questions or feedback, please reach out to [CharafEB](https://github.com/CharafEB).
