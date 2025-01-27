@@ -30,7 +30,7 @@ After starting the application, open your web browser and navigate to `http://lo
 Technologies Used
 
 - **Groq API**: For processing and analyzing customer preferences.
-- **TypeScript**: For building the application logic.
+- **JavaScript**: For building the application logic.
 - **Node.js**: For server-side operations.
 - **Express.js**: For handling routes and requests.
 
