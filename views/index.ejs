@@ -1,402 +1,458 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Find Your Perfect Fragrance</title>
-  <style>
-    :root {
-      --primary: #7c3aed;
-      --primary-light: #8b5cf6;
-      --secondary: #f3f4f6;
-      --text: #1f2937;
-      --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="manifest" href="../manifest.json"/>
+    <title>Find Your Perfect Fragrance</title>
+    <style>
+      :root {
+        --primary: #7c3aed;
+        --primary-light: #8b5cf6;
+        --secondary: #f3f4f6;
+        --text: #1f2937;
+        --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-    body {
-      font-family: 'Inter', -apple-system, sans-serif;
-      background: linear-gradient(135deg, #f6f7f9 0%, #ffffff 100%);
-      min-height: 100vh;
-      color: var(--text);
-      line-height: 1.6;
-    }
+      body {
+        font-family: "Inter", -apple-system, sans-serif;
+        background: linear-gradient(135deg, #f6f7f9 0%, #ffffff 100%);
+        min-height: 100vh;
+        color: var(--text);
+        line-height: 1.6;
+      }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 2rem;
-    }
-
-    .quiz-section {
-      margin-bottom: 4rem;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      color: var(--primary);
-      margin-bottom: 1.5rem;
-      text-align: center;
-      font-weight: 800;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-
-    .card {
-      background: white;
-      border-radius: 16px;
-      padding: 1.5rem;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      border: 2px solid transparent;
-      box-shadow: var(--card-shadow);
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      border-color: var(--primary);
-      box-shadow: 0 12px 20px rgba(124, 58, 237, 0.1);
-    }
-
-    .card.selected {
-      background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
-      border-color: var(--primary);
-    }
-
-    .card-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: var(--primary);
-    }
-
-    .card-description {
-      color: #6b7280;
-      font-size: 0.95rem;
-    }
-
-    .notes-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 1rem;
-    }
-
-    .button {
-      display: block;
-      margin: 3rem auto;
-      padding: 1rem 2.5rem;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: white;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 6px rgba(124, 58, 237, 0.2);
-    }
-
-    .button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 15px rgba(124, 58, 237, 0.3);
-    }
-
-    .button:active {
-      transform: translateY(0);
-    }
-
-    .results {
-      background: white;
-      border-radius: 16px;
-      padding: 2rem;
-      margin-top: 2rem;
-      box-shadow: var(--card-shadow);
-    }
-
-    .results-title {
-      font-size: 1.5rem;
-      color: var(--primary);
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-
-    @media (max-width: 768px) {
       .container {
-        padding: 1rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .quiz-section {
+        margin-bottom: 4rem;
       }
 
       h1 {
-        font-size: 2rem;
+        font-size: 2.5rem;
+        color: var(--primary);
+        margin-bottom: 1.5rem;
+        text-align: center;
+        font-weight: 800;
+        background: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--primary-light) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
 
       .cards {
-        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
       }
-    }
 
-    /* Toast Notification */
-    .toast {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      background: var(--primary);
-      color: white;
-      padding: 1rem 2rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
-    }
+      .card {
+        background: white;
+        border-radius: 16px;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: 2px solid transparent;
+        box-shadow: var(--card-shadow);
+      }
 
-    @keyframes slideIn {
-      from { transform: translateX(100%); }
-      to { transform: translateX(0); }
-    }
+      .card:hover {
+        transform: translateY(-4px);
+        border-color: var(--primary);
+        box-shadow: 0 12px 20px rgba(124, 58, 237, 0.1);
+      }
 
-    @keyframes fadeOut {
-      from { opacity: 1; }
-      to { opacity: 0; }
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <section class="quiz-section">
-      <h1>Find Your Perfect Fragrance</h1>
-      <div class="cards valueList">
-        <div class="card">
-          <p class="card-title">Male</p>
-          <p class="card-description">Bold and sophisticated fragrances designed for the modern gentleman.</p>
-        </div>
-        <div class="card">
-          <p class="card-title">Female</p>
-          <p class="card-description">Elegant and enchanting scents crafted for feminine grace.</p>
-        </div>
-        <div class="card">
-          <p class="card-title">Unisex</p>
-          <p class="card-description">Universal fragrances that transcend traditional boundaries.</p>
-        </div>
-      </div>
-    </section>
+      .card.selected {
+        background: linear-gradient(
+          135deg,
+          rgba(124, 58, 237, 0.1) 0%,
+          rgba(139, 92, 246, 0.1) 100%
+        );
+        border-color: var(--primary);
+      }
 
-    <section class="quiz-section">
-      <h1>Your Preferred Season</h1>
-      <div class="cards">
-        <div class="card valueList">
-          <p class="card-title">Summer</p>
-          <p class="card-description">Light, refreshing scents perfect for warm days.</p>
-        </div>
-        <div class="card valueList">
-          <p class="card-title">Winter</p>
-          <p class="card-description">Warm, enveloping fragrances for cold weather.</p>
-        </div>
-        <div class="card valueList">
-          <p class="card-title">Spring</p>
-          <p class="card-description">Fresh, floral notes that celebrate new beginnings.</p>
-        </div>
-        <div class="card valueList">
-          <p class="card-title">Fall</p>
-          <p class="card-description">Rich, sophisticated scents for the autumn season.</p>
-        </div>
-      </div>
-    </section>
+      .card-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--primary);
+      }
 
-    <section class="quiz-section">
-      <h1>Select Your Favorite Notes</h1>
-      <div class="notes-grid">
-        <div class="card notes">
-          <p class="card-title">Bergamot</p>
-          <p class="card-description">Bright citrus with a sophisticated edge.</p>
-        </div>
-        <div class="card notes">
-          <p class="card-title">Lavender</p>
-          <p class="card-description">Classic, calming herbal freshness.</p>
-        </div>
-        <div class="card notes">
-          <p class="card-title">Mint</p>
-          <p class="card-description">Invigorating and energizing.</p>
-        </div>
-        <div class="card notes">
-          <p class="card-title">Peony</p>
-          <p class="card-description">Romantic and delicately sweet.</p>
-        </div>
-        <div class="card notes">
-          <p class="card-title">Lily of the Valley</p>
-          <p class="card-description">Pure and ethereal floral.</p>
-        </div>
-        <div class="card notes">
-          <p class="card-title">White Musk</p>
-          <p class="card-description">Clean and sophisticated base note.</p>
-        </div>
-        <div class="card notes">
-          <p class="card-title">Woods</p>
-          <p class="card-description">Deep and grounding natural essence.</p>
-        </div>
-        <div class="card notes">
-          <p class="card-title">Citrus</p>
-          <p class="card-description">Bright and uplifting blend.</p>
-        </div>
-        <div class="card notes">
-          <p class="card-title">Vanilla</p>
-          <p class="card-description">Sweet and comforting warmth.</p>
-        </div>
-      </div>
-    </section>
+      .card-description {
+        color: #6b7280;
+        font-size: 0.95rem;
+      }
 
-    <section class="quiz-section">
-      <h1>Your Personality Style</h1>
-      <div class="cards">
-        <div class="card valueList">
-          <p class="card-title">Elegant and Serious</p>
-          <p class="card-description">Sophisticated scents for the refined individual.</p>
-        </div>
-        <div class="card valueList">
-          <p class="card-title">Sporty and Active</p>
-          <p class="card-description">Fresh, energetic fragrances for the dynamic lifestyle.</p>
-        </div>
-        <div class="card valueList">
-          <p class="card-title">Gentle and Light</p>
-          <p class="card-description">Subtle, delicate scents for a soft presence.</p>
-        </div>
-        <div class="card valueList">
-          <p class="card-title">Adventurous and Lively</p>
-          <p class="card-description">Bold, unique fragrances for the free spirit.</p>
-        </div>
-      </div>
-    </section>
+      .notes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 1rem;
+      }
 
-    <section class="quiz-section">
-      <h1>Your Fragrance Purpose</h1>
-      <div class="cards">
-        <div class="card valueList">
-          <p class="card-title">Formal Occasions</p>
-          <p class="card-description">Sophisticated scents for special moments.</p>
-        </div>
-        <div class="card valueList">
-          <p class="card-title">Daily Use</p>
-          <p class="card-description">Versatile fragrances for everyday elegance.</p>
-        </div>
-        <div class="card valueList">
-          <p class="card-title">Gift for Someone</p>
-          <p class="card-description">Thoughtfully selected scents to delight others.</p>
-        </div>
-      </div>
-    </section>
+      .button {
+        display: block;
+        margin: 3rem auto;
+        padding: 1rem 2.5rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: white;
+        background: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--primary-light) 100%
+        );
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(124, 58, 237, 0.2);
+      }
 
-    <section class="quiz-section">
-      <h1>Sensitivities</h1>
-      <div class="cards">
-        <div class="card valueList">
-          <p class="card-title">Jasmine</p>
-          <p class="card-description">Avoid fragrances with jasmine notes.</p>
-        </div>
-        <div class="card valueList">
-          <p class="card-title">Musk</p>
-          <p class="card-description">Avoid fragrances with musk bases.</p>
-        </div>
-        <div class="card valueList">
-          <p class="card-title">Alcohol</p>
-          <p class="card-description">Prefer alcohol-free formulations.</p>
-        </div>
-      </div>
-    </section>
+      .button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(124, 58, 237, 0.3);
+      }
 
-    <button class="button" onclick="SendList()">
-      Discover Your Perfect Fragrance
-    </button>
+      .button:active {
+        transform: translateY(0);
+      }
 
-    <div id="genrate" class="results"></div>
-  </div>
+      .results {
+        background: white;
+        border-radius: 16px;
+        padding: 2rem;
+        margin-top: 2rem;
+        box-shadow: var(--card-shadow);
+      }
 
-  <script>
-    const cardS = document.querySelectorAll('.valueList');
-    const NoteS = document.querySelectorAll('.notes');
-    const genrate = document.getElementById('genrate');
-    const valueList = [];
-    const NoteList = [];
+      .results-title {
+        font-size: 1.5rem;
+        color: var(--primary);
+        margin-bottom: 1rem;
+        text-align: center;
+      }
 
-    function showToast(message) {
-      const toast = document.createElement('div');
-      toast.className = 'toast';
-      toast.textContent = message;
-      document.body.appendChild(toast);
-      setTimeout(() => toast.remove(), 3000);
-    }
-
-    function toggleCardSelection(card) {
-      card.classList.toggle('selected');
-    }
-
-    cardS.forEach((card) => {
-      card.addEventListener('click', () => {
-        const note = card.querySelector('.card-title').textContent;
-        if(!valueList.includes(note)) {
-          valueList.push(note);
-          toggleCardSelection(card);
-          showToast(`Selected: ${note}`);
+      @media (max-width: 768px) {
+        .container {
+          padding: 1rem;
         }
-      });
-    });
 
-    NoteS.forEach((card) => {
-      card.addEventListener('click', () => {
-        const note = card.querySelector('.card-title').textContent;
-        if(!NoteList.includes(note)) {
-          NoteList.push(note);
-          toggleCardSelection(card);
-          showToast(`Selected: ${note}`);
+        h1 {
+          font-size: 2rem;
         }
-      });
-    });
 
-    async function SendList() {
-      const Upload_Data = {
-        Gender: valueList[0],
-        Season: valueList[1],
-        Preferred: NoteList,
-        Personality: valueList[2],
-        Intended: valueList[3],
-        Sensitivity: valueList[4]
-      };
+        .cards {
+          grid-template-columns: 1fr;
+        }
+      }
 
-      try {
-        const response = await fetch("http://localhost:3000/testAI", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(Upload_Data),
+      /* Toast Notification */
+      .toast {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: var(--primary);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes fadeOut {
+        from {
+          opacity: 1;
+        }
+        to {
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <section class="quiz-section">
+        <h1>Find Your Perfect Fragrance</h1>
+        <div class="cards valueList">
+          <div class="card">
+            <p class="card-title">Male</p>
+            <p class="card-description">
+              Bold and sophisticated fragrances designed for the modern
+              gentleman.
+            </p>
+          </div>
+          <div class="card">
+            <p class="card-title">Female</p>
+            <p class="card-description">
+              Elegant and enchanting scents crafted for feminine grace.
+            </p>
+          </div>
+          <div class="card">
+            <p class="card-title">Unisex</p>
+            <p class="card-description">
+              Universal fragrances that transcend traditional boundaries.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="quiz-section">
+        <h1>Your Preferred Season</h1>
+        <div class="cards">
+          <div class="card valueList">
+            <p class="card-title">Summer</p>
+            <p class="card-description">
+              Light, refreshing scents perfect for warm days.
+            </p>
+          </div>
+          <div class="card valueList">
+            <p class="card-title">Winter</p>
+            <p class="card-description">
+              Warm, enveloping fragrances for cold weather.
+            </p>
+          </div>
+          <div class="card valueList">
+            <p class="card-title">Spring</p>
+            <p class="card-description">
+              Fresh, floral notes that celebrate new beginnings.
+            </p>
+          </div>
+          <div class="card valueList">
+            <p class="card-title">Fall</p>
+            <p class="card-description">
+              Rich, sophisticated scents for the autumn season.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="quiz-section">
+        <h1>Select Your Favorite Notes</h1>
+        <div class="notes-grid">
+          <div class="card notes">
+            <p class="card-title">Bergamot</p>
+            <p class="card-description">
+              Bright citrus with a sophisticated edge.
+            </p>
+          </div>
+          <div class="card notes">
+            <p class="card-title">Lavender</p>
+            <p class="card-description">Classic, calming herbal freshness.</p>
+          </div>
+          <div class="card notes">
+            <p class="card-title">Mint</p>
+            <p class="card-description">Invigorating and energizing.</p>
+          </div>
+          <div class="card notes">
+            <p class="card-title">Peony</p>
+            <p class="card-description">Romantic and delicately sweet.</p>
+          </div>
+          <div class="card notes">
+            <p class="card-title">Lily of the Valley</p>
+            <p class="card-description">Pure and ethereal floral.</p>
+          </div>
+          <div class="card notes">
+            <p class="card-title">White Musk</p>
+            <p class="card-description">Clean and sophisticated base note.</p>
+          </div>
+          <div class="card notes">
+            <p class="card-title">Woods</p>
+            <p class="card-description">Deep and grounding natural essence.</p>
+          </div>
+          <div class="card notes">
+            <p class="card-title">Citrus</p>
+            <p class="card-description">Bright and uplifting blend.</p>
+          </div>
+          <div class="card notes">
+            <p class="card-title">Vanilla</p>
+            <p class="card-description">Sweet and comforting warmth.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="quiz-section">
+        <h1>Your Personality Style</h1>
+        <div class="cards">
+          <div class="card valueList">
+            <p class="card-title">Elegant and Serious</p>
+            <p class="card-description">
+              Sophisticated scents for the refined individual.
+            </p>
+          </div>
+          <div class="card valueList">
+            <p class="card-title">Sporty and Active</p>
+            <p class="card-description">
+              Fresh, energetic fragrances for the dynamic lifestyle.
+            </p>
+          </div>
+          <div class="card valueList">
+            <p class="card-title">Gentle and Light</p>
+            <p class="card-description">
+              Subtle, delicate scents for a soft presence.
+            </p>
+          </div>
+          <div class="card valueList">
+            <p class="card-title">Adventurous and Lively</p>
+            <p class="card-description">
+              Bold, unique fragrances for the free spirit.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="quiz-section">
+        <h1>Your Fragrance Purpose</h1>
+        <div class="cards">
+          <div class="card valueList">
+            <p class="card-title">Formal Occasions</p>
+            <p class="card-description">
+              Sophisticated scents for special moments.
+            </p>
+          </div>
+          <div class="card valueList">
+            <p class="card-title">Daily Use</p>
+            <p class="card-description">
+              Versatile fragrances for everyday elegance.
+            </p>
+          </div>
+          <div class="card valueList">
+            <p class="card-title">Gift for Someone</p>
+            <p class="card-description">
+              Thoughtfully selected scents to delight others.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="quiz-section">
+        <h1>Sensitivities</h1>
+        <div class="cards">
+          <div class="card valueList">
+            <p class="card-title">Jasmine</p>
+            <p class="card-description">Avoid fragrances with jasmine notes.</p>
+          </div>
+          <div class="card valueList">
+            <p class="card-title">Musk</p>
+            <p class="card-description">Avoid fragrances with musk bases.</p>
+          </div>
+          <div class="card valueList">
+            <p class="card-title">Alcohol</p>
+            <p class="card-description">Prefer alcohol-free formulations.</p>
+          </div>
+        </div>
+      </section>
+
+      <button class="button" onclick="SendList()">
+        Discover Your Perfect Fragrance
+      </button>
+
+      <div id="genrate" class="results"></div>
+    </div>
+
+    <script>
+      const cardS = document.querySelectorAll(".valueList");
+      const NoteS = document.querySelectorAll(".notes");
+      const genrate = document.getElementById("genrate");
+      const valueList = [];
+      const NoteList = [];
+
+      function showToast(message) {
+        const toast = document.createElement("div");
+        toast.className = "toast";
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+      }
+
+      function toggleCardSelection(card) {
+        card.classList.toggle("selected");
+      }
+
+      cardS.forEach((card) => {
+        card.addEventListener("click", () => {
+          const note = card.querySelector(".card-title").textContent;
+          if (!valueList.includes(note)) {
+            valueList.push(note);
+            toggleCardSelection(card);
+            showToast(`Selected: ${note}`);
+          }
         });
-        const data = await response.json();
-        const perfumes = data.recommended_perfumes;
-        
-        genrate.innerHTML = `
+      });
+
+      NoteS.forEach((card) => {
+        card.addEventListener("click", () => {
+          const note = card.querySelector(".card-title").textContent;
+          if (!NoteList.includes(note)) {
+            NoteList.push(note);
+            toggleCardSelection(card);
+            showToast(`Selected: ${note}`);
+          }
+        });
+      });
+
+      async function SendList() {
+        const Upload_Data = {
+          Gender: valueList[0],
+          Season: valueList[1],
+          Preferred: NoteList,
+          Personality: valueList[2],
+          Intended: valueList[3],
+          Sensitivity: valueList[4],
+        };
+
+        try {
+          const response = await fetch("http://localhost:3000/testAI", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(Upload_Data),
+          });
+          const data = await response.json();
+          const perfumes = data.recommended_perfumes;
+
+          genrate.innerHTML = `
           <h2 class="results-title">Your Perfect Fragrances</h2>
           <div class="cards">
-            ${perfumes.map(perfume => `
+            ${perfumes
+              .map(
+                (perfume) => `
               <div class="card">
                 <p class="card-title">${perfume}</p>
               </div>
-            `).join('')}
+            `
+              )
+              .join("")}
           </div>
         `;
-      } catch (error) {
-        console.error(error);
-        showToast('Error fetching recommendations. Please try again.');
+        } catch (error) {
+          console.error(error);
+          showToast("Error fetching recommendations. Please try again.");
+        }
       }
-    }
-  </script>
-</body>
+    </script>
+  </body>
 </html>
