@@ -1,7 +1,7 @@
 {
 "name":"Perfum Picker",
 "short_name":"PPA",
-"start_url":"/test",
+"start_url":"/",
 "background_color":"#a8ddf0",
 "theme_color":"#a8ddf0",
 "display":"fullscreen",
