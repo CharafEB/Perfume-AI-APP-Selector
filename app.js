@@ -1,9 +1,12 @@
 const express = require('express');
+const path = require('path');
 const app = require('express')();
+app.use('/public', express.static('public'));
 app.use(require('express').json());
 require('dotenv').config()
 const authRoutes = require('./routes/authRoutes');
 const Groq = require('groq-sdk');
+const exp = require('constants');
 const groq = new Groq({ apiKey:process.env.GROQ_API_KEY });
 
 app.set('view engine', 'ejs');

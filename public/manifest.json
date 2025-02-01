@@ -1,0 +1,22 @@
+{
+"name":"Perfum Picker",
+"short_name":"PPA",
+"start_url":"/test",
+"background_color":"#a8ddf0",
+"theme_color":"#a8ddf0",
+"display":"fullscreen",
+"orientation":"any",
+"icons":[
+{
+"src":"img-mafi/icon512_maskable.png",
+"sizes":"512x512",
+"type":"image/png"
+
+},
+{
+"src":"img-mafi/icon512_rounded.png",
+"sizes":"512x512",
+"type":"image/png"
+}
+]
+}
