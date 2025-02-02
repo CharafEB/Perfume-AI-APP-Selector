@@ -1,22 +1,2 @@
-{
-"name":"Perfum Picker",
-"short_name":"PPA",
-"start_url":"/",
-"background_color":"#a8ddf0",
-"theme_color":"#a8ddf0",
-"display":"standalone",
-"orientation":"any",
-"icons":[
-{
-"src":"img-mafi/icon512_maskable.png",
-"sizes":"512x512",
-"type":"image/png"
 
-},
-{
-"src":"img-mafi/icon512_rounded.png",
-"sizes":"512x512",
-"type":"image/png"
-}
-]
-}
+{"theme_color":"#ffffff","background_color":"#292424","icons":[{"purpose":"maskable","sizes":"512x512","src":"img-mafi/icon512_maskable.png","type":"image/png"},{"purpose":"any","sizes":"512x512","src":"img-mafi/icon512_rounded.png","type":"image/png"}],"orientation":"portrait","display":"standalone","dir":"auto","lang":"en-US","name":"Perfume Picker","short_name":"P-P-Ai","start_url":"/","scope":"/","description":"A ai model the help you to pick your best perfume ","id":"/"}
